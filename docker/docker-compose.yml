@@ -63,15 +63,17 @@ services:
   coordinator:
     image: "lewuathe/trino-coordinator:${trino_VERSION}"
     ports:
-      - "7070:8080"
+      - "8080:8080"
     container_name: "coordinator"
     command: http://coordinator:8080 coordinator
+    volumes:
+       - ./trino/catalog:/usr/local/trino/etc/catalog
 
   worker0:
     image: "lewuathe/trino-worker:${trino_VERSION}"
     container_name: "worker0"
     ports:
-      - "7081:8081"
+      - "8081:8081"
     command: http://coordinator:8080 worker0
     volumes:
       - ./trino/catalog:/usr/local/trino/etc/catalog
